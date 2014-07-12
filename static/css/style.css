@@ -1,8 +1,77 @@
-body {
-	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
-	font-weight: 300;
+body, html {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  height:100%;
 }
 
 body h1 {
+  font-family: 'Roboto Slab', serif;
 	font-weight: 300;
 }
+
+.wrap {
+  height: 100%;
+}
+
+#nav-top {
+  /*position: fixed;*/
+  height: 50px;
+  width: 100%;
+  background-color: #fff;
+  border-bottom: 1px solid #ccc;
+  line-height: 50px;
+}
+
+#nav-top .nav-left {
+  float: left;
+  padding-left: 10px;
+}
+
+#nav-list-title {
+  font-weight: 200;
+  font-size: 24px;
+}
+
+.wrap-body-block {
+  height:100%;
+}
+
+.home-content {
+  margin: 0 auto;
+  text-align: center;
+  background: url('../img/home-cover.png');
+  height: 400px;
+}
+
+.home-content .home-headline {
+  font-weight: 500;
+  font-size: 36px;
+  margin-bottom: 60px;
+  padding-top: 40px;
+  color: #fff;
+}
+
+.wrap-body-block {
+}
+
+#home-search-input {
+  font-size: 20px;
+  font-family: inherit;
+  font-weight: 200;
+  border: 2px solid #fff;
+  background: none;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+#home-search-input:focus {
+  outline: none;
+  border: 2px solid red;
+}
+
+.home-search-section {
+
+}
+
+
