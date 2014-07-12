@@ -56,15 +56,29 @@
         videos[v].play();
         videos[v].volume=0;
       }
-    
 
-
-
+  function changeFile(){
+    var x = document.getElementById("videofile");
+    document.getElementById("lmd").value = x.files[0].lastModifiedDate;
+  }
   </script>
 
   <div id="event-wrap">
     <div class="event-content content">
-      <h1 class="event-headline headline">Welcome to {{ evt.title }}</h1>
+      <div class="headline-wrap">
+        <h1 class="event-headline headline">Welcome to {{ evt.title }}</h1>
+        <button class="btn-primary" id="add-a-video">Add a video</button>
+        <div id="upload-video-popup">
+          <form id="upload-video-form" action="/upload?event={{ eventId }}" method="POST" enctype="multipart/form-data">
+            <div>
+              <input type="file" name="videofile" size="40" id="videofile" onchange="changeFile()">
+                     <input type="hidden" name="lmd" id="lmd" >
+            </div>
+
+            <button class="btn-primary btn-upload" id="add-video-btn" type="submit">Submit</button>
+          </form>
+        </div>
+      </div>
       <div class="video-stage">
         <div class="contentFrame" id="contentFrame1">
           <video id="video0" data-vid-id="0" class="video" width="650px" height="450px">

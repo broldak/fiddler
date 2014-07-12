@@ -6,13 +6,6 @@
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900' rel='stylesheet' type='text/css'>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
-
-<script type="text/javascript">
-    function newEvent(){
-        window.location="createEvent?title=test";
-    }
-</script>
-
 <div class="wrap">
 
   {% block nav %}
@@ -26,7 +19,14 @@
           </li>
         </ul>
         <ul class="nav-right">
-          <button class="btn btn-primary" onclick="newEvent()">Create Event</button>
+          <button id="create-event-nav" class="btn btn-primary">Create Event</button>
+          <div id="create-event-popup">
+            <form action="/createEvent">
+              <p class="create-an-event">Create an event</p>
+              <input name="title" id="create-event-input" type="text" placeholder="Event title"/>
+              <button class="btn-primary" type="submit">Submit</button>
+            </form>
+          </div>
         </ul>
       </div>
     </div>
@@ -36,3 +36,4 @@
     {% block body %}{% endblock %}
   </div>
 </div>
+<script src="{{ url_for('static', filename='js/app.js') }}" type='text/javascript'></script>
