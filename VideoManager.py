@@ -7,19 +7,19 @@ from hachoir_metadata import extractMetadata
 
 from google.appengine.ext import ndb
 
-def addVideo(vidFile, event, title):
+def addVideo(vidFile, title):
     metadata = getMetadata(vidFile)
     vid = Video()
-    vid.event = event
     vid.title = title
     vid.timestamp = metadata.get("created_date")
     vid.primary = ( not event.primary )
-    vid.offset = getOffset(event, vid.timestamp)
     vid.put()
     return vid.key.id()
 
 def setEvent(videoId, event):
-    getVideo(videoId).event = event
+    vid = getVideo(videoId)
+    vid.event = event
+    vid.offset = getOffset(event, vid.timestamp)
 
 def getVideo(videoId):
     Video.get_by_id(videoId)
