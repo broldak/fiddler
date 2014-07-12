@@ -6,7 +6,7 @@ body, html {
 
 body h1 {
   font-family: 'Roboto Slab', serif;
-	font-weight: 300;
+	font-weight: 500;
 }
 
 .wrap {
@@ -15,11 +15,11 @@ body h1 {
 
 #nav-top {
   /*position: fixed;*/
-  height: 50px;
+  height: 60px;
   width: 100%;
   background-color: #fff;
   border-bottom: 3px solid #ccc;
-  line-height: 50px;
+  line-height: 60px;
 }
 
 #nav-top .nav-left {
@@ -44,11 +44,10 @@ body h1 {
 }
 
 .home-content .home-headline {
-  font-weight: 500;
-  font-size: 40px;
   margin-bottom: 60px;
   padding-top: 60px;
   color: #fff;
+  font-size: 40px;
 }
 
 #home-search-input {
@@ -81,5 +80,55 @@ body h1 {
 }
 :-ms-input-placeholder { /* Internet Explorer 10+ */
     color:    #ddd;
+}
+
+.content {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.event-headline {
+  padding-top: 40px;
+  margin-bottom: 20px;
+  font-size: 36px;
+}
+
+.video-controls {
+  margin: 0 auto;
+  margin-top: 10px;
+  height: 200px;
+  border: 1px solid #ccc;
+  width: 550px;
+}
+
+.nav-right {
+  float: right;
+  padding-right: 10px;
+}
+
+.btn-primary {
+  background-color: #5BADB3;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-family: inherit;
+  font-weight: 200;
+  font-size: 17px;
+  padding: 7px;
+  width: 100px;
+}
+
+.user-headline {
+  padding-top: 40px;
+  font-size: 36px;
+}
+
+.user-videos-container {
+  margin-top: 20px;
+}
+
+.user-video {
+  display: inline-block;
+  padding: 10px;
 }
 

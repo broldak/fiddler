@@ -19,14 +19,13 @@ def upload():
 
 @app.route('/event/<int:event_id>')
 def show_event(event_id):
-  video = Video.load(event_id)
-  if video is None:
-    abort(404);
-  url = videos.url(video.filename)
+  #video = Video.load(event_id)
+  #if video is None:
+  #  abort(404);
+  #url = videos.url(video.filename)
   return render_template('event.html')
 
-
-@app.route('/home')
+@app.route('/')
 def home():
     """Default Home Page."""
     return render_template('home.html')
