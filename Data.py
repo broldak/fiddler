@@ -4,8 +4,14 @@ from google.appengine.ext import ndb
 class Video(ndb.Model):
     title = ndb.StringProperty()
     owner = ndb.StringProperty()
-    name = ndb.StringProperty()
+    event = ndb.ReferenceProperty(Event)
     location = ndb.GeoPtProperty()
-    offset = ndb.IntegerProperty()
-    primary = ndb.BooleanProperty()
-    create_date = ndb.DateTimeProperty()
+    offset = ndb.FloatProperty()
+    timestamp = ndb.DateTimeProperty()
+
+class Event(ndb.Model):
+    title = ndb.StringProperty()
+    owner = ndb.StringProperty()
+    videos = ndb.ListProperty()
+    primary = ndb.ReferenceProperty(Video)
+    date = ndb.DateProperty()

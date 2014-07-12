@@ -2,7 +2,6 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 app.config['DEBUG'] = True
 
-import VideoManager
 
 videos = UploadSet('videos', MOVIES)
 
