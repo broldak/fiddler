@@ -1,5 +1,4 @@
-from google.appengine.api import users
-from google.appengine.ext import ndb
+
 
 class Video(ndb.Model):
     title = ndb.StringProperty()
