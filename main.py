@@ -1,8 +1,22 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
+from werkzeug.utils import secure_filename
+import VideoManager
+import os, time
+import settings_local
+from parse_rest.datatypes import Object
+from parse_rest.connection import register
+register(settings_local.APPLICATION_ID, settings_local.REST_API_KEY)
+
+class Video(Object):
+    pass
+
+class Event(Object):
+    pass
+
+UPLOAD_FOLDER = './videos/'
 app = Flask(__name__)
 app.config['DEBUG'] = True
-
-#videos = UploadSet('videos', MOVIES)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/user/<username>')
 def show_user(username):
@@ -11,39 +25,63 @@ def show_user(username):
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
-    if (request.method == 'POST' and 'video' in request.files):
-        filename = videos.save(request.files[video])
-        rec = Video(filename=filename, user=g.user.id)
-        rec.store()
-        flash("Video saved.")
-        return redirect(url_for('show', id=rec.id))
-    return render_template('upload.html')
+    eventId = request.args['event']
+    if (request.method == 'POST'):
+        file = request.files['videofile']
+        print (not file)
+        if file:
+            tmeStamp=getTimestamp(request.form['lmd'])
+            vid = Video(title=file.filename, timestamp=tmeStamp, event=eventId, offset=getOffset(tmeStamp, eventId) )
+            vid.save()
+            if vid.offset == 0:
+                evnt = Event.Query.get(objectId=eventId)
+                evnt.primary = vid.objectId
+                evnt.save()
+            filename = vid.objectId
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            return show_event(eventId)
+    return render_template('upload.html', eventId=eventId)
 
-@app.route('/testwrite')
-def uploadVideo(file, title):
-    filename = "/gs/fiddlerhack.appspot.com/videos/" + VideoManager.addVideo(file, title)
-    writable_file_name = files.gs.create(filename, mime_type='application/octet-stream', acl='public-read')
-    with files.open(writable_file_name, 'a') as f:
-        f.write("test")
-    files.finalize(writable_file_name)
+@app.route('/createEvent', methods=['GET'])
+def createEvent():
+    evnt = Event(title=request.args['title'], primary="")
+    evnt.save()
+    return show_event(evnt.objectId)
 
+def getTimestamp(strTime):
+    print strTime
+    tym = strTime.split(" ")
+    ret = ""
+    for i in tym[0:5]:
+        ret = ret +  i +" "
+    return ret
 
-@app.route('/event/<int:event_id>')
-def show_event(event_id, name='Event1'):
-  #video = Video.load(event_id)
-  #if video is None:
-  #  abort(404);
-  #url = videos.url(video.filename)
-  return render_template('event.html', name=name)
+def getOffset(vidTime, eventId):
+    p = "%a %b %d %Y %H:%M:%S "
+    dattme_video = time.strptime(vidTime, p)
+    evnt = Event.Query.get(objectId=eventId)
+    if( not evnt.primary):
+        return 0
+    else:
+        prim = Video.Query.get(objectId=evnt.primary)
+        dattme_event = time.strptime(prim.timestamp, p)
+        return (time.mktime(dattme_video) - time.mktime(dattme_event))
 
-@app.route('/event/create')
-def create_event():
-  return render_template('create_event.html')
+@app.route('/event/<event_id>')
+def show_event(event_id):
+  evt = Event.Query.get(objectId=event_id)
+  videos = Video.Query.filter(event=event_id)
+  return render_template('event.html', evt = evt, videos=videos)
 
 @app.route('/')
 def home():
     """Default Home Page."""
     return render_template('home.html')
+
+@app.route('/test')
+def test():
+    """Test (for testing purposes."""
+    return "Test"
 
 @app.errorhandler(404)
 def page_not_found(e):

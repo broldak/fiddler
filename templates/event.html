@@ -1,6 +1,5 @@
 {% extends "layout.html" %}
 {% block body %}
-
   <script>
       window.document.title = '{{name}}';
 
@@ -65,7 +64,7 @@
 
   <div id="event-wrap">
     <div class="event-content content">
-      <h1 class="event-headline headline">Welcome to {{ name }}</h1>
+      <h1 class="event-headline headline">Welcome to {{ evt.title }}</h1>
       <div class="video-stage">
         <div class="contentFrame" id="contentFrame1">
           <video id="video0" data-vid-id="0" class="video" width="650px" height="450px">
@@ -91,5 +90,16 @@
     videos[2] = document.getElementById('video2');
     console.log(videos);
   </script>
+
+{% endblock %}
+        Fill this in
+        <a href="/upload?event={{ evt.objectId }}"> add video </a>
+        <br/>
+        {% for i in videos %}
+            {{ i.objectId }} <br/>
+        {% endfor  %}
+      </div>
+    </div>
+  </div>
 
 {% endblock %}

@@ -1,20 +1,16 @@
-from Data import Video
-
 from hachoir_core.error import HachoirError
 from hachoir_core.stream import InputIOStream
 from hachoir_parser import guessParser
 from hachoir_metadata import extractMetadata
 
-from google.appengine.ext import ndb
-
-def addVideo(vidFile, title):
+def addVideo(vidFile):
+    #f = open(vidFile, 'rb')
     metadata = getMetadata(vidFile)
-    vid = Video()
-    vid.title = title
-    vid.timestamp = metadata.get("created_date")
-    vid.primary = ( not event.primary )
-    vid.put()
-    return vid.key.id()
+    print metadata
+    params = {}
+    #params['timestamp'] = metadata.get("created_date")
+    #params['primary'] = ( not event.primary )
+    return params
 
 def setEvent(videoId, event):
     vid = getVideo(videoId)
@@ -26,7 +22,6 @@ def getVideo(videoId):
 
 def getOffset(event, timestamp):
     return (timestamp - event.primary.timestamp).total_seconds
-
 
 def getMetadata(vidFile):
     try:

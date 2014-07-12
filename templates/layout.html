@@ -7,6 +7,12 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 
+<script type="text/javascript">
+    function newEvent(){
+        window.location="createEvent?title=test";
+    }
+</script>
+
 <div class="wrap">
 
   {% block nav %}
@@ -20,7 +26,7 @@
           </li>
         </ul>
         <ul class="nav-right">
-          <a href="/user/1" class="btn btn-primary">My Videos</a>
+          <button class="btn btn-primary" onclick="newEvent()">Create Event</button>
         </ul>
       </div>
     </div>
