@@ -4,20 +4,11 @@ app.config['DEBUG'] = True
 
 import VideoManager
 
-
-<<<<<<< HEAD
 @app.route('/event/<int:event_id>')
 def show_event(event_id):
 	#event_id will be an integer
     """Show an event instance."""
     return render_template('event.html')
-=======
-@app.route('/')
-def hello():
-    """Return a friendly HTTP greeting."""
-    VideoManager.addVideo("tt")
-    return render_template('layout.html')
->>>>>>> 8503bf0c727d0858418d707a0e2442dbef45fabb
 
 @app.route('/user/<username>')
 def show_user(username):
