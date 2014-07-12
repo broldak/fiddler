@@ -2,8 +2,6 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 app.config['DEBUG'] = True
 
-from google.appengine.api import files
-
 @app.route('/user/<username>')
 def show_user(username):
     """Show a user account instance."""
@@ -39,3 +37,5 @@ def test():
 def page_not_found(e):
     """Return a custom 404 error."""
     return 'Sorry, nothing at this URL.', 404
+
+app.run()
