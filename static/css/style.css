@@ -120,6 +120,10 @@ input[type="file"] {
   padding-right: 10px;
 }
 
+.nav-right .btn-primary {
+  width: 150px;
+}
+
 .btn-primary {
   background-color: #5BADB3;
   border: none;
@@ -161,9 +165,81 @@ a {
   text-decoration: none;
 }
 
+#create-event-popup {
+  display: none;
+}
 
+#create-event-popup.active {
+  display: block;
+  position: absolute;
+  right: 10px;
+  background-color: white;
+  margin: 0 auto;
+  text-align: center;
+  border-radius: 5px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border: 3px solid #ccc;
+  border-top: none;
+  padding: 10px 15px 15px 15px;
+}
 
+#create-event-input {
+  font-size: 16px;
+}
 
+.create-an-event {
+  font-weight: 400;
+  font-size: 18px;
+}
+
+#add-a-video {
+  font-size: 18px;
+  width: 150px;
+}
+
+#upload-video-popup {
+  display: none;
+}
+
+#upload-video-popup.active {
+  display: block;
+  position: absolute;
+  background-color: white;
+  border-radius: 5px;
+  border: 3px solid #ccc;
+  top: 142px;
+  right: 78px;
+  padding-bottom: 5px;
+}
+
+#upload-video-popup input {
+  font-size: 16px;
+  font-weight:200;
+  width:220px;
+}
+
+#upload-video-popup button {
+  font-size: 16px;
+}
+
+.headline-wrap {
+  width: 400px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.btn-secondary {
+  background-color: #999;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-family: inherit;
+  font-weight: 200;
+  font-size: 17px;
+  padding: 7px;
+  width: 100px;
+}
 
 
 
