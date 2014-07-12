@@ -4,8 +4,6 @@ app.config['DEBUG'] = True
 
 from google.appengine.api import files
 
-#videos = UploadSet('videos', MOVIES)
-
 @app.route('/user/<username>')
 def show_user(username):
     """Show a user account instance."""
@@ -13,22 +11,11 @@ def show_user(username):
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
-    if (request.method == 'POST' and 'video' in request.files):
-        filename = videos.save(request.files[video])
-        rec = Video(filename=filename, user=g.user.id)
-        rec.store()
-        flash("Video saved.")
-        return redirect(url_for('show', id=rec.id))
+    if (request.method == 'POST'):
+        data_file = request.files.get('file')
+        filename = VideoManager.addfile(data_file, request.args.get('title'))
+        print filename
     return render_template('upload.html')
-
-@app.route('/testwrite')
-def uploadVideo(file, title):
-    filename = "/gs/fiddlerhack.appspot.com/videos/" + VideoManager.addVideo(file, title)
-    writable_file_name = files.gs.create(filename, mime_type='application/octet-stream', acl='public-read')
-    with files.open(writable_file_name, 'a') as f:
-        f.write("test")
-    files.finalize(writable_file_name)
-
 
 @app.route('/event/<int:event_id>')
 def show_event(event_id):
