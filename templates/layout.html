@@ -4,14 +4,19 @@
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}">
 <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900' rel='stylesheet' type='text/css'>
+
 <div class="wrap">
+
   {% block nav %}
     <div id="nav-top">
-      <div class='nav-list-wrap'>
-        <ul class='nav-left'>
-          <li id='nav-list-title'>
+      <div class="nav-list-wrap">
+        <ul class="nav-left">
+          <li id="nav-list-title">
             Fiddler
           </li>
+        </ul>
+        <ul class="nav-right">
+          <button class="btn btn-primary">My Videos</button>
         </ul>
       </div>
     </div>
