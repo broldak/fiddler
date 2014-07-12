@@ -50,15 +50,29 @@ body h1 {
   font-size: 40px;
 }
 
+input, textarea {
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-family: inherit;
+  font-size: 20px;
+  padding: 10px;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 15px;
+}
+
+input[type="file"] {
+  border: none;
+}
+
 #home-search-input {
   font-size: 20px;
   font-family: inherit;
-  font-weight: 300;
+  font-weight: 200;
   border: 3px solid #4DB5BD;
   background: rgba(0, 0, 0, 0.6);
   color: white;
   padding: 10px 10px 10px 10px;
-  border-radius: 5px;
   width: 300px;
 }
 
@@ -96,7 +110,7 @@ body h1 {
 .video-controls {
   margin: 0 auto;
   margin-top: 10px;
-  height: 200px;
+  /*height: 200px;*/
   border: 1px solid #ccc;
   width: 550px;
 }
@@ -118,6 +132,11 @@ body h1 {
   width: 100px;
 }
 
+.btn-primary:hover {
+  cursor: pointer;
+  background-color: #3F9196;
+}
+
 .user-headline {
   padding-top: 40px;
   font-size: 36px;
@@ -131,4 +150,21 @@ body h1 {
   display: inline-block;
   padding: 10px;
 }
+
+.headline {
+  padding-top: 40px;
+  margin-bottom: 20px;
+  font-size: 36px;
+}
+
+a {
+  text-decoration: none;
+}
+
+
+
+
+
+
+
 

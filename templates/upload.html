@@ -1,21 +1,23 @@
 {% extends "layout.html" %}
 {% block body %}
   
-  <h1 class="upload-headline headline">
-    Upload
-  </h1>
+  <div class="upload-content content">
+    <h1 class="upload-headline headline">
+      Upload Video
+    </h1>
 
-  <div>
-  	<form>
-  		<input type="text" name="event_name" value="Event Name" maxlength="100" />
-  		<input type="text" name="event_location" value"Event Location" maxlength="100" />
+    <div class="upload-form-wrap">
+    	<form action="/upload" method="post" class="upload-form">
+    		<input type="text" name="event_name" value="Event Name" maxlength="100" />
+    		<input type="text" name="event_location" value"Event Location" maxlength="100" />
 
-  		<div>
-   			<input type="file" name="videofile" size="40">
-    	</div>
-
-  		<button class="btn-primary btn-upload" type="submit" action="/upload" method = "POST"/>Submit</button>
-  	</form>
+    		<div>
+     			<input type="file" name="videofile" size="40">
+      	</div>
+    		
+        <button class="btn-primary btn-upload" type="submit" action="/upload" method = "POST"/>Submit</button>
+    	</form>
+    </div>
   </div>
 
 {% endblock %}

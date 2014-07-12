@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block body %}
+  
+  <div id="create-event-wrap">
+    <div class="create-event-content content">
+      <h1 class="create-event-headline headline">Create an Event</h1>
+      <div class="create-event-form-wrap">
+        <form class="create-event-form">
+          <input name="title" placeholder="Title"/>
+          <textarea name="description" placeholder="Description"></textarea>
+          <button type="submit" class="btn-primary">Create</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

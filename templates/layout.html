@@ -4,6 +4,8 @@
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}">
 <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900' rel='stylesheet' type='text/css'>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
 
 <div class="wrap">
 
@@ -12,11 +14,13 @@
       <div class="nav-list-wrap">
         <ul class="nav-left">
           <li id="nav-list-title">
-            Fiddler
+            <a href="/">
+              Fiddler
+            </a>
           </li>
         </ul>
         <ul class="nav-right">
-          <button class="btn btn-primary">My Videos</button>
+          <a href="/user/1" class="btn btn-primary">My Videos</a>
         </ul>
       </div>
     </div>
