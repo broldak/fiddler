@@ -39,7 +39,7 @@ def upload():
                 evnt.save()
             filename = vid.objectId
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return show_event(eventId)
+            return redirect('/event/'+eventId)
     return render_template('upload.html', eventId=eventId)
 
 @app.route('/createEvent', methods=['GET'])
@@ -80,7 +80,7 @@ def sortVideos(videos):
     video_list.append(i)
 
   if(len(video_list)<1):
-    return video_list  
+    return video_list
 
   for i in range(0, len(video_list)):
     for j in range(0, len(video_list)):
