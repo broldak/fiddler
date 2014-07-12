@@ -2,7 +2,6 @@ from flask import Flask, render_template
 app = Flask(__name__)
 app.config['DEBUG'] = True
 
-import VideoManager
 
 @app.route('/event/<int:event_id>')
 def show_event(event_id):

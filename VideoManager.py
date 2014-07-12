@@ -5,15 +5,16 @@ from hachoir_core.stream import InputIOStream
 from hachoir_parser import guessParser
 from hachoir_metadata import extractMetadata
 
-def addVideo(vidFile, event):
+def addVideo(vidFile, event, name):
     metadata = getMetadata(vidFile)
     vid = Video()
     vid.event = event
+    vid.name = name
     vid.timestamp = metadata.get("created_date")
     vid.primary = ( not event.primary )
     vid.offset = getOffset(event, vid.timestamp)
     vid.put()
-    retrun vid.key.id()
+    return vid.key.id()
 
 def getOffset(event, timestamp):
     return (timestamp - event.primary.timestamp).total_seconds
