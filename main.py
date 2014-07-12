@@ -3,7 +3,7 @@ app = Flask(__name__)
 app.config['DEBUG'] = True
 
 
-videos = UploadSet('videos', MOVIES)
+#videos = UploadSet('videos', MOVIES)
 
 
 
@@ -25,13 +25,12 @@ def upload():
 
 @app.route('/event/<int:event_id>')
 def show_event(event_id):
-	#event_id will be an integer
-	video = Video.load(event_id)
-	if video is None:
-		abort(404)
-	url = videos.url(video.filename)
-    """Show an event instance."""
-    return render_template('event.html', url = url, photo = photo)
+  video = Video.load(event_id)
+  if video is None:
+    abort(404);
+  url = videos.url(video.filename)
+  return render_template('event.html')
+
 
 @app.route('/home')
 def home():
