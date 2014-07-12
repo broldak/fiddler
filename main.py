@@ -25,19 +25,22 @@ def show_user(username):
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
+    eventId = request.args['event']
     if (request.method == 'POST'):
         file = request.files['videofile']
         print (not file)
         if file:
             tmeStamp=getTimestamp(request.form['lmd'])
-            vid = Video(title=file.filename, timestamp=tmeStamp, offset=getOffset(tmeStamp, "axtdkwnOn8") )
+            vid = Video(title=file.filename, timestamp=tmeStamp, event=eventId, offset=getOffset(tmeStamp, eventId) )
             vid.save()
+            if vid.offset == 0:
+                evnt = Event.Query.get(objectId=eventId)
+                evnt.primary = vid.objectId
+                evnt.save()
             filename = vid.objectId
-            print filename
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            print os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            return "uploaded"
-    return render_template('upload.html')
+            return show_event(eventId)
+    return render_template('upload.html', eventId=eventId)
 
 @app.route('/createEvent', methods=['GET'])
 def createEvent():
@@ -64,13 +67,11 @@ def getOffset(vidTime, eventId):
         dattme_event = time.strptime(prim.timestamp, p)
         return (time.mktime(dattme_video) - time.mktime(dattme_event))
 
-@app.route('/event/<int:event_id>')
+@app.route('/event/<event_id>')
 def show_event(event_id):
-  #video = Video.load(event_id)
-  #if video is None:
-  #  abort(404);
-  #url = videos.url(video.filename)
-  return render_template('event.html')
+  evt = Event.Query.get(objectId=event_id)
+  videos = Video.Query.filter(event=event_id)
+  return render_template('event.html', evt = evt, videos=videos)
 
 @app.route('/')
 def home():

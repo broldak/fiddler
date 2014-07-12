@@ -1,14 +1,19 @@
 {% extends "layout.html" %}
 {% block body %}
-  
+
   <div id="event-wrap">
     <div class="event-content content">
-      <h1 class="event-headline headline">Welcome to [Event Name]</h1>
+      <h1 class="event-headline headline">Welcome to {{ evt.title }}</h1>
       <div class="video-stage">
         <img src="http://placehold.it/550x300">
       </div>
       <div class="video-controls">
         Fill this in
+        <a href="/upload?event={{ evt.objectId }}"> add video </a>
+        <br/>
+        {% for i in videos %}
+            {{ i.objectId }} <br/>
+        {% endfor  %}
       </div>
     </div>
   </div>
