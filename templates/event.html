@@ -3,60 +3,80 @@
   <script>
       window.document.title = '{{name}}';
 
-      var videos_list = [{id: 0, offset: 0}, {id: 1, offset: 25}, {id: 2, offset: 45}];
-
-      console.log(videos_list);
-
       var videos = new Array();
       var offsets = new Array();
-      var visible = $('')
+      var playingVid = 0;
 
-      for (x in videos_list){
-        console.log(x);
-        offsets[videos_list[x].id] = videos_list[x].offset;
-        console.log(offsets);
-      }
+      {% set count = 0 %}
+      {% for i in video_list %}
+      offsets[{{count}}] = {{ i.offset }};
+      {% set count = count +1 %}
+      {% endfor %}
 
       var myVar = setInterval(function(){myTimer()}, 500);
-
+      var startTime =0;
       function myTimer(){
         //var $visible = $('.video:visible');
         //console.log($visible.paused);
         currentVideo = 0;
         initialVideo = 0;
-          for (i = initialVideo+1; i < videos.length; i++){
-            if (videos[currentVideo].paused) {
-              if (videos[currentVideo].currentTime >= offsets[i] && i !== currentVideo) {
-                //videos[currentVideo].style.display = 'none';
-                //videos[i].style.display = 'inline-block';
-                console.log(i);
-                videos[i].volume = 1;
-                currentVideo = i;
-              }
-              console.log(videos[i]);
+        var d = new Date();
+        var n = d.getTime();
+        for (i = initialVideo+1; i < videos.length; i++){
+            console.log(n-startTime);
+            if( videos[i].paused &&  (n - startTime)/1000 > offsets[i] && (n-startTime)/1000 < offsets[i]+videos[i].duration){
+                videos[i].play();
+                videos[i].muted = true;
             }
-            else {
-              if (videos[currentVideo].currentTime >= offsets[i]){
-                console.log('not paused', i);
-                playVid(i);
-                muteVid(i);
-              }
-            }
-          //&& videos[currentVideo].currentTime >= 
+
         }
       }
 
-      function muteVid(v){
-        videos[v].volume = 0;
-      }
 
       function playVid(v){
         //console.log(offsets);
         videos[v].currentTime = videos[0].currentTime - offsets[v];
         videos[v].play();
-        videos[v].volume=0;
       }
-    
+
+      function start(){
+          var d = new Date();
+          startTime = d.getTime();
+          videos[0].play();
+      }
+
+      function circleNumber(num){
+        if(num < 0){
+          return videos.length-1;
+        }else if(num >= videos.length){
+          return 0;
+        }else{
+          return num;
+        }
+
+
+      }
+
+      function prev(){
+        videos[playingVid].style.display = "none";
+        videos[playingVid].muted = true;
+
+        playingVid = circleNumber(playingVid - 1);
+
+        videos[playingVid].style.display = "inline-block";
+        videos[playingVid].muted = false;
+      }
+
+      function next(){
+        videos[playingVid].style.display = "none";
+        videos[playingVid].muted = true;
+
+        playingVid = circleNumber(playingVid + 1);
+
+        videos[playingVid].style.display = "inline-block";
+        videos[playingVid].muted = false;
+      }
+
 
 
 
@@ -67,30 +87,34 @@
       <h1 class="event-headline headline">Welcome to {{ evt.title }}</h1>
       <div class="video-stage">
         <div class="contentFrame" id="contentFrame1">
-          <video id="video0" data-vid-id="0" class="video" width="650px" height="450px">
-            <source src="http://localhost:5000/static/vid/test1.mp4"  type="video/mp4" />
+          {% set count = 0 %}
+          {% for video in video_list %}
+
+          <video {% if count > 0 %} style="display:none" {% endif %} id="{{ video.objectId }}" data-vid-id="0" class="video" width="650px" height="450px">
+            <source src="http://localhost:5000/static/vid/{{ video.objectId }}"  type="video/mp4" />
           </video>
-          <video id="video1" data-vid-id="1" class="video" style='display:inline-block' width="650px" height="450px">
-            <source src="http://localhost:5000/static/vid/test2.mp4"  type="video/mp4" />
-          </video>
-          <video id="video2" data-vid-id="2" class="video" style='display:inline-block' width="650px" height="450px">
-            <source src="http://localhost:5000/static/vid/test3.mp4"  type="video/mp4" />
-          </video>
+
+          {% set count = count + 1 %}
+          {% endfor %}
         </div>
       </div>
       <div class="video-controls">
-        <button class='btn-primary' onclick="document.getElementById('video0').play();">play</button>
-        <button class='btn-primary' onclick="document.getElementById('video0').pause();">pause</button>
+        <button class='btn-primary' onclick="prev()">prev</button>
+        <button class='btn-primary' onclick="start()">play</button>
+        <button class='btn-primary' onclick="pause()">pause</button>
+        <button class='btn-primary' onclick="next()">next</button>
     </div>
   </div>
 
   <script>
-    videos[0] = document.getElementById('video0');
-    videos[1] = document.getElementById('video1');
-    videos[2] = document.getElementById('video2');
+    {% set count = 0 %}
+    {% for i in video_list %}
+    videos[{{count}}] = document.getElementById('{{ i.objectId }}');
+    {% set count = count +1 %}
+    {% endfor %}
     console.log(videos);
   </script>
-  
+
         Fill this in
         <a href="/upload?event={{ evt.objectId }}"> add video </a>
         <br/>
