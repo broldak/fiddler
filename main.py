@@ -1,23 +1,37 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 app = Flask(__name__)
 app.config['DEBUG'] = True
 
 
-@app.route('/event/<int:event_id>')
-def show_event(event_id):
-	#event_id will be an integer
-    """Show an event instance."""
-    return render_template('event.html')
+videos = UploadSet('videos', MOVIES)
+
+
 
 @app.route('/user/<username>')
 def show_user(username):
     """Show a user account instance."""
     return render_template('user.html')
 
-@app.route('/upload')
+@app.route('/upload', methods=['GET', 'POST'])
 def upload():
-    """Show the page to allow a video upload."""
+    if (request.method == 'POST' and 'video' in request.files):
+        filename = videos.save(request.files[video]) 
+        rec = Video(filename=filename, user=g.user.id)
+        rec.store()
+        flash("Video saved.")
+        return redirect(url_for('show', id=rec.id))
     return render_template('upload.html')
+
+
+@app.route('/event/<int:event_id>')
+def show_event(event_id):
+	#event_id will be an integer
+	video = Video.load(event_id)
+	if video is None:
+		abort(404)
+	url = videos.url(video.filename)
+    """Show an event instance."""
+    return render_template('event.html', url = url, photo = photo)
 
 @app.route('/home')
 def home():
