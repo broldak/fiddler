@@ -1,6 +1,13 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
+from werkzeug.utils import secure_filename
+import os
+import sqlite3
+
+UPLOAD_FOLDER = './videos/'
+
 app = Flask(__name__)
 app.config['DEBUG'] = True
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/user/<username>')
 def show_user(username):
@@ -8,11 +15,13 @@ def show_user(username):
     return render_template('user.html')
 
 @app.route('/upload', methods=['GET', 'POST'])
-def upload():
+def upload_test():
     if (request.method == 'POST'):
-        data_file = request.files.get('file')
-        filename = VideoManager.addfile(data_file, request.args.get('title'))
-        print filename
+        file = request.files['videofile']
+        if file:
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            return "uploaded"
     return render_template('upload.html')
 
 @app.route('/event/<int:event_id>')

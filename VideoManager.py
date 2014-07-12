@@ -1,11 +1,7 @@
-from Data import Video
-
 from hachoir_core.error import HachoirError
 from hachoir_core.stream import InputIOStream
 from hachoir_parser import guessParser
 from hachoir_metadata import extractMetadata
-
-from google.appengine.ext import ndb
 
 def addVideo(vidFile, title):
     metadata = getMetadata(vidFile)
