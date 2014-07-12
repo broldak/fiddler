@@ -2,13 +2,13 @@ from flask import Flask, render_template
 app = Flask(__name__)
 app.config['DEBUG'] = True
 
-# Note: We don't need to call run() since our application is embedded within
-# the App Engine WSGI application server.
+import VideoManager
 
 
 @app.route('/')
 def hello():
     """Return a friendly HTTP greeting."""
+    VideoManager.addVideo("tt")
     return render_template('layout.html')
 
 
