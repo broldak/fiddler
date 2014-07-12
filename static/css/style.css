@@ -213,14 +213,24 @@ a {
   padding-bottom: 5px;
 }
 
-#upload-video-popup input {
+.upload-video-form input {
   font-size: 16px;
   font-weight:200;
   width:220px;
 }
 
-#upload-video-popup button {
+.upload-video-form button {
   font-size: 16px;
+}
+
+.upload-video-form {
+  margin: 0 auto;
+}
+
+.upload-headline {
+  padding-top: 5px;
+  font-size: 18px;
+  margin-bottom: 5px;
 }
 
 .headline-wrap {
