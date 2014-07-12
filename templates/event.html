@@ -26,7 +26,7 @@
         initialVideo = 0;
           for (i = initialVideo+1; i < videos.length; i++){
             if (videos[currentVideo].paused) {
-              if (videos[currentVideo].currentTime >= offsets[i]) {
+              if (videos[currentVideo].currentTime >= offsets[i] && i !== currentVideo) {
                 //videos[currentVideo].style.display = 'none';
                 //videos[i].style.display = 'inline-block';
                 console.log(i);
@@ -90,8 +90,7 @@
     videos[2] = document.getElementById('video2');
     console.log(videos);
   </script>
-
-{% endblock %}
+  
         Fill this in
         <a href="/upload?event={{ evt.objectId }}"> add video </a>
         <br/>
