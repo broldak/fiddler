@@ -13,7 +13,7 @@ class Video(Object):
 class Event(Object):
     pass
 
-UPLOAD_FOLDER = './videos/'
+UPLOAD_FOLDER = './static/vid/'
 app = Flask(__name__)
 app.config['DEBUG'] = True
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -46,7 +46,7 @@ def upload():
 def createEvent():
     evnt = Event(title=request.args['title'], primary="")
     evnt.save()
-    return show_event(evnt.objectId)
+    return redirect('/event/'+evnt.objectId)
 
 def getTimestamp(strTime):
     print strTime
@@ -70,8 +70,33 @@ def getOffset(vidTime, eventId):
 @app.route('/event/<event_id>')
 def show_event(event_id):
   evt = Event.Query.get(objectId=event_id)
-  videos = Video.Query.filter(event=event_id)
-  return render_template('event.html', evt = evt, videos=videos)
+  videos = sortVideos(Video.Query.filter(event=event_id))
+
+  return render_template('event.html', evt = evt, video_list=videos)
+
+def sortVideos(videos):
+  video_list = []
+  for i in videos:
+    video_list.append(i)
+
+  if(len(video_list)<1):
+    return video_list  
+
+  for i in range(0, len(video_list)):
+    for j in range(0, len(video_list)):
+      if(video_list[i].offset > video_list[j].offset):
+        temp = video_list[i]
+        video_list[i] = video_list[j]
+        video_list[j] = temp
+  video_list.reverse()
+
+  minOffset = video_list[0].offset
+  if(minOffset < 0 ):
+    for i in video_list:
+      i.offset = abs(minOffset) + i.offset
+      i.save()
+
+  return video_list
 
 @app.route('/')
 def home():
